@@ -1,10 +1,11 @@
 CC = gcc
+CFLAGS = -W -Wall
 
-main : main.c restaurants.o
-	$(CC) -o main main.c restaurants.o
+main : main.c eating.o
+	$(CC) $(CFLAGS) -o $@ $^
 
-members.o : restaurants.c restaurants.h
-	$(CC) -c restaurants.c -o restaurants.o
+eating.o : eating.c eating.h
+	$(CC) $(CFLAGS) -c eating.c -o $@
 
 clean :
 	rm *.o main
