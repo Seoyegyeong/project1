@@ -5,6 +5,11 @@ T_info** eating;
 int _count = 0; //저장돼있는 식당의 개수
 int _totalMemory = 50; //총 메모리 공간
 
+//dibs(찜 목록) 에 대해.
+char** dibs;
+int dibs_count = 0;
+int dibs_totalMemory = 0;
+
 void m_allocation(){
     eating = calloc(50, sizeof(T_info*));
     for (int i=0; i<50 ; i++){
@@ -12,10 +17,6 @@ void m_allocation(){
     }
 }
 int m_is_available(){ //현재 추가할 수 있는 데이터 공간 확인
-    //int i;
-    /*for(i=0 ; i<MAX_RESTAURANT ; i++){
-        if(eating[i]==NULL) return 1;
-    }*/
     if (_totalMemory>_count)
 	return 1;
     else
@@ -121,4 +122,38 @@ char* m_to_string_save(T_info* p){
     static char str[100];
     sprintf(str, "%s%s%s%s%c", p->name,  p->main_food, p->telephone, p->address, p->delivery);
     return str;
+}
+
+//dibs(찜 목록) 에 대해.
+void dibs_allocation(){
+    dibs = malloc(sizeof(char)*10);
+    dibs_totalMemory = 10;
+}
+int dibs_is_available(){ //현재 추가할 수 있는 데이터 공간 확인
+    int i;
+    for(i=0 ; i<dibs_totalMemory ; i++){
+        if(dibs[i]==0x0) return 1;
+    }
+    return 0;
+}
+void dibs_increase(){
+    dibs = realloc(dibs, 10*sizeof(char));
+    dibs_totalMemory = dibs_totalMemory +10;
+}
+void dibs_create(T_info* p){
+    strcpy(dibs[dibs_count], p->name);
+    dibs_count++;
+}
+int return_dibs_count(){
+    return dibs_count;
+}
+char* return_dibs_location(int n){ // 찜 목록의 주소값 반환
+    return dibs[n];
+}
+int check_same_name(T_info* p){
+    //p->name 이랑 dibs의 모든 항목과 비교하기
+    for(int i=0 ; i<dibs_count ; i++){
+        if (strcmp(dibs[i], p->name)==0) return 0;
+    }
+    return 1;
 }

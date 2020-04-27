@@ -30,3 +30,12 @@ int m_get_about_menu(T_info* p[], char * menu);
 int m_check_delivery(T_info* p[]);
 char* m_to_string(T_info* p);  // 특정 식당의 정보를 문자열로 만들어주기
 char* m_to_string_save(T_info* p);  // 특정 식당정보를 문자열로 만들어주는데 save file 때만 사용
+
+//dibs(찜 목록)에 대해.
+void dibs_allocation(); //찜한 항목 저장할 공간 생성해주기
+int dibs_is_available();
+void dibs_increase();
+void dibs_create(T_info* p);
+int return_dibs_count();
+char* return_dibs_location(int n);
+int check_same_name(T_info* p);

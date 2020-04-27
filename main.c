@@ -11,12 +11,14 @@ void search_menu();
 void search_delivery();
 void load_file();
 void save_file();
-//하나 더 추가하세용
+void call_dibs();
+void read_dibs();
 
 
 int main(){
     int menu=0;
     m_allocation();
+    dibs_allocation();
     while(1){
         printf("\nChoose number : 1.Create  2.Read list  3.Update  4.Delete  5.Read one  6.Search(menu)  7.Search(delivery)  8.Load  9.Save  10.  0.Quit > ");
         scanf("%d", &menu);
@@ -49,9 +51,12 @@ int main(){
             case 9:
                 save_file();
                 break;
-            /*case 10:
-                printf("1");
-                break;*/
+            case 10:
+                call_dibs();
+                break;
+            case 11:
+                read_dibs();    
+                break;
             case 0:
             default:
                 return 0;
@@ -138,7 +143,7 @@ void read_one_record(){
         scanf("%d", &num);
     }
     T_info* p = m_return_info_location(num);
-    printf("%s\'s info.", m_getName(p));
+    printf("%s\'s info.\n", m_getName(p));
     printf("Main menu : %s", m_getMain(p));
     printf("Telephone : %s", m_getTele(p));
     printf("address : %s", m_getAddress(p));
@@ -212,4 +217,29 @@ void save_file(){
         fprintf(f, "\n%s", m_to_string_save(p));
     }
     fclose(f);
+}
+void call_dibs(){ //찜하기 : 식당 리스트 출력 후 번호를 입력받아 해당 식당이름을 따로 dips어레이에 저장
+    int num, range=m_count();
+    print_Name();
+    printf("Choose one number you like > ");
+    scanf("%d", &num);
+    while(num<1 || range<num){
+        printf("Wrong range. Enter again > ");
+        scanf("%d", &num);
+    }
+    T_info* p = m_return_info_location(num);
+    if(check_same_name(p)==0){ //이미 추가한 항목이라면 inform 주고 return하기.
+        printf("You've already added this restaurant!");
+        return;
+    }
+    if(!dibs_is_available()){ //dibs 공간 부족하면 늘려주기
+        dibs_increase();
+    }
+    dibs_create(p);
+}
+void read_dibs(){
+    int range = return_dibs_count();
+    for(int i=0 ; i<range ; i++){
+        printf("%d. %s ",i+1,return_dibs_location(i));
+    }
 }
