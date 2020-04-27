@@ -20,7 +20,7 @@ int main(){
     m_allocation();
     dibs_allocation();
     while(1){
-        printf("\nChoose number : 1.Create  2.Read list  3.Update  4.Delete  5.Read one  6.Search(menu)  7.Search(delivery)  8.Load  9.Save  10.  0.Quit > ");
+        printf("\nChoose number : 1.Create  2.Read list  3.Update  4.Delete  5.Read one  6.Search(menu)  7.Search(delivery)  8.Load file  9.Save file  10.add dibs  11.dibs list  0.Quit > ");
         scanf("%d", &menu);
         printf("\n");
         switch(menu){
